@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<%- include('header'); %>
+	<title>VistaSecure</title>
+</head>
+
+<body>
+	<%- include('navbar'); %>
+	<div class="text-center">
+		<h2 class="fs-1 badge bg-warning text-wrap">MAAK WACHTWOORD</h2>
+	</div>
+	<div class="container justify-content-center text-light lead" style="background:#4e4e4ea8; width: 500px; padding: 50px; border-radius: 10px;">
+		<p>Password lengte:</p>
+		<select class="form-control" id="pgLength" title="Select the length of your password." style="width: 200px;">
+			<optgroup label="Zwak">
+				<option value="6">6</option>
+				<option value="7">7</option>
+				<option value="8">8</option>
+				<option value="9">9</option>
+				<option value="10">10</option>
+			</optgroup>
+			<optgroup label="Redelijk">
+				<option value="11">11</option>
+				<option value="12">12</option>
+				<option value="13">13</option>
+				<option value="14">14</option>
+				<option value="15">15</option>
+				<option value="16">16</option>
+				<option value="17">17</option>
+				<option value="18">18</option>
+				<option value="19">19</option>
+				<option value="20">20</option>
+			</optgroup>
+			<optgroup label="Goed">
+				<option value="21">21</option>
+				<option value="22">22</option>
+				<option value="23">23</option>
+				<option value="24">24</option>
+				<option value="25">25</option>
+				<option value="26">26</option>
+				<option value="27">27</option>
+				<option value="28">28</option>
+				<option value="29">29</option>
+				<option value="30">30</option>
+				<option value="31">31</option>
+				<option value="32">32</option>
+				<option value="33">33</option>
+				<option value="34">34</option>
+				<option value="35">35</option>
+				<option value="36">36</option>
+				<option value="37">37</option>
+				<option value="38">38</option>
+				<option value="39">39</option>
+			</optgroup>
+			<optgroup label="Sterk">
+				<option value="40">40</option>
+				<option value="41">41</option>
+				<option value="42">42</option>
+				<option value="43">43</option>
+				<option value="44">44</option>
+				<option value="45">45</option>
+				<option value="46">46</option>
+				<option value="47">47</option>
+				<option value="48">48</option>
+				<option value="49">49</option>
+				<option value="50">50</option>
+			</optgroup>
+		</select>
+		<br>
+		<p>
+			<input class="form-check-input" type="checkbox" name="Special" id="Special"> Speciale characters:</input>
+			( bijv. @#$% )
+		</p>
+
+		<p>
+			<input class="form-check-input" type="checkbox" name="Numbers" checked="true" id="Numbers"> Nummers:</input>
+			( bijv. 123456 )
+		</p>
+
+		<p>
+			<input class="form-check-input" type="checkbox" name="Lowercase" checked="true" id="Lowercase"> Kleine letters:</input>
+			( bijv. abcdefgh )
+		</p>
+		<p>
+			<input class="form-check-input" type="checkbox" name="Uppercase" id="Uppercase"> Hoofdletters:</input>
+			( bijv. ABCDEFGH )
+		</p>
+		<input class="form-control" id="password" type="text"></input>
+		<small class="form-text text-light">We zullen uw wachtwoord nooit met iemand delen.</small>
+		<button class="btn btn-warning" onclick="Generate()">Maak wachtwoord</button>
+	</div>
+	<%- include('footer'); %>
+</body>
+<script>
+	let text = document.getElementById('password');
+
+	function Generate() {
+		var result = '';
+		var characters = '';
+
+		var settings = {
+			password_length: document.getElementById('pgLength').value,
+			Special: document.getElementById('Special').checked,
+			Numbers: document.getElementById('Numbers').checked,
+			Lowercase: document.getElementById('Lowercase').checked,
+			Uppercase: document.getElementById('Uppercase').checked,
+		}
+
+		var chars = {
+			Special: "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~",
+			Numbers: "1234567890",
+			Lowercase: "abcdefghijklmnopqrstuvwxyz",
+			Uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+		}
+
+		for (let property in settings) {
+			if (settings[property] && chars[property] != undefined) {
+				characters += chars[property];
+			}
+		}
+
+		if (!characters.length) {
+			text.value = 'Minimaal 1 optie moet aangevinkt zijn.';
+			return;
+		}
+
+		for (var i = 0; i < settings.password_length; i++) {
+			result += characters.charAt(Math.floor(Math.random() * characters.length));
+		}
+		text.value = result
+	}
+</script>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('header'); %>
+  <title>QUIZ</title>
+</head>
+<body>
+	<%- include('navbar'); %>
+	<div class="text-center">
+		<h2 id="idtext" class="fs-1 badge bg-warning text-wrap">QUIZ <%= id %> REAL OR FAKE?</h2>
+	</div>
+	<div class="text-center">
+		<button onclick="check('real')" type="button" class="btn btn-warning badge">Real</button>
+		<button onclick="check('fake')" type="button" class="btn btn-warning badge">Fake</button>
+		<button onclick="next()" type="button" class="btn btn-primary badge">Next page</button>
+		<div style="margin-top: 15px;"></div>
+		<img class="img-fluid text-center" src="<%= json.image %>" style="border: blue;  border: 3px solid #ffc107;">
+	</div>
+	<script>
+
+		const check = (answer) => {
+			var element = document.getElementById('idtext').classList
+			element.remove('bg-warning');
+
+			'<%= json.answer %>' == answer ? element.add('bg-success') : element.add('bg-danger');
+		}
+
+		const next = () => {
+			var url = parseInt(new URL(String(document.location)).pathname.substr(-1)) + 1
+			document.location = String(document.location).slice(0,-1) + url
+		}
+	</script>
+
+	<%- include('footer'); %>
+</body>
+</html>

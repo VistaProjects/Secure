@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%- include('header'); %>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.2.0/zxcvbn.js"></script>
+	<title>VistaSecure</title>
+	<style>
+		section {
+			margin: 0em auto 0;
+			width: 100%;
+			max-width: 800px;
+		}
+
+		input {
+			display: block;
+			margin: .5em auto 0em;
+			padding: 0.5em 1em 0.5em 0.7em;
+			width: 100%;
+			border: none;
+			background: rgba(0, 0, 0, 0.05);
+			color: rgba(0, 0, 0, 0.8);
+			font-size: 2em;
+			line-height: 0;
+			transition: all .5s linear;
+		}
+
+		
+		input {
+			outline: 0;
+			transition: all .5s linear;
+			box-shadow: inset 0px 0px 10px rgb(255, 208, 0);
+			height: 65px;
+		}
+
+		meter {
+			margin: 0 auto 1em;
+			width: 100%;
+			height: 1em;
+		}
+
+		meter[value="1"]::-webkit-meter-optimum-value {
+			background: red;
+		}
+
+		meter[value="2"]::-webkit-meter-optimum-value {
+			background: orange;
+		}
+
+		meter[value="3"]::-webkit-meter-optimum-value {
+			background: yellow;
+		}
+
+		meter[value="4"]::-webkit-meter-optimum-value {
+			background: green;
+		}
+
+		.feedback {
+			color: #9ab;
+			font-size: 50%;
+			padding: 0 .25em;
+			margin-top: 1em;
+		}
+	</style>
+</head>
+
+<body>
+	<%- include('navbar'); %>
+	<div class="text-center">
+		<h2 class="fs-1 badge bg-warning text-wrap">CHECK WACHTWOORD</h2>
+		<div class="container justify-content-center text-light lead" style="background:#4e4e4ea8; width: 500px; padding: 50px; border-radius: 10px;">
+	
+			<section>
+				<input type="password" name="password" id="password" placeholder="Wachtwoord">
+				<small class="form-text text-light">We zullen uw wachtwoord nooit met iemand delen.</small>
+				<meter max="4" id="password-strength-meter"></meter>
+				<h1 class="text-warning" id="password-strength-text"></h1>
+			</section>
+		</div>
+	</div>
+	<%- include('footer'); %>
+</body>
+<script>
+	let strength = [
+		"Heel slecht",
+		"Slecht",
+		"Zwak",
+		"Goed",
+		"Heel goed"
+	];
+
+	let password = document.getElementById('password');
+	let meter = document.getElementById('password-strength-meter');
+	let text = document.getElementById('password-strength-text');
+
+	password.addEventListener('input', function () {
+		let result = zxcvbn(password.value);
+
+		meter.value = result.score;
+		
+		text.innerHTML = `Wachtwoord sterkte: ${strength[result.score]}<h1 class='feedback'>${result.feedback.suggestions}<br><br>${result.feedback.warning}</h1>`;
+	});
+</script>
+
+</html>

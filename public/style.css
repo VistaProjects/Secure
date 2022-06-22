@@ -1,0 +1,15 @@
+body {
+	background: url(https://wallpapersmug.com/large/ba787c/black-dark-cubes-abstract.jpg) fixed center no-repeat;
+	background-size: cover;
+}
+.nav-active {
+	color: rgb(34, 34, 34) !important;
+	background: #ffcd39;
+}
+
+/* center div vertical */
+.center-div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
